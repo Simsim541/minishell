@@ -6,7 +6,7 @@
 /*   By: mberri <mberri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:57:56 by aaammari          #+#    #+#             */
-/*   Updated: 2023/02/21 19:05:17 by mberri           ###   ########.fr       */
+/*   Updated: 2023/02/23 15:19:16 by mberri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ int	main(int ac, char **av, char **env)
 {
 	char	*line;
 	int		ret;
-	char	**args = NULL;
+	char	**args = NULL;`
 	t_cmd	*cmd;
+	int		i;
 
-	
-	int i = 0;
+	i = 0;
 	ret = 0;
 	(void)ac;
 	(void)av;
-	line = "                echo \"hello\" how 'are 'you |    ls       -al | echo welcome";
+	line = "  echo \"hello\" how 'are 'you |    ls       -al | echo welcome";
 	if (!check_quotes(line))
 		return (0);
 	line = expand_env(line, env);
@@ -49,8 +49,8 @@ int	main(int ac, char **av, char **env)
 		printf("command : %s,    argument: %s\n", cmd->command, cmd->argumet);
 			cmd = cmd->next;
 	}
-	
-	while(args[i])
+
+	while (args[i])
 	{
 		printf("%s\n", args[i]);
 		i++;
