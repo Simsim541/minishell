@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-int	is_white_space(char c)
-{
-	if (c == ' ' || c >= 9 && c <= 13)
-		return (1);
-	return (0);
-}
-
 t_cmd	*init_cmd(void)
 {
 	t_cmd	*new_mem;
@@ -39,23 +32,30 @@ int	main(int ac, char **av, char **env)
 	t_cmd	*cmd;
 
 	
-	//int i = 0;
+	int i = 0;
 	ret = 0;
 	(void)ac;
 	(void)av;
-	line = "echo \"hello\" how are you | ls | echo '$USER'";
+	line = "                echo \"hello\" how 'are 'you |    ls       -al | echo welcome";
 	if (!check_quotes(line))
 		return (0);
 	line = expand_env(line, env);
 	printf("line: %s\n", line);
 	args = ft_split(line, '|');
 	cmd = init_cmd();
-	/*while(args[i])
+	parse(cmd, args);
+	while (cmd)
+	{
+		printf("command : %s,    argument: %s\n", cmd->command, cmd->argumet);
+			cmd = cmd->next;
+	}
+	
+	while(args[i])
 	{
 		printf("%s\n", args[i]);
 		i++;
 	}
-	if (args && *args)
+	/*if (args && *args)
 		ft_execve(args, env);
 	simple_pipe(ft_split("ls", ' '), args, env);*/
 	return (0);
