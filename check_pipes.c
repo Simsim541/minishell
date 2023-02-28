@@ -6,7 +6,7 @@
 /*   By: mberri <mberri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:37:14 by mberri            #+#    #+#             */
-/*   Updated: 2023/02/24 15:46:07 by mberri           ###   ########.fr       */
+/*   Updated: 2023/02/27 17:32:30 by mberri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 /*else if (line[i] == '|' && j > 0 && (!(db % 2) || !(s % 2))
 			&& line[i + 1] == '\0')
 			command++;*/
+
+static void	init_variable(int *a, int *b, int *c)
+{
+	*a = 0;
+	*b = 0;
+	*c = 0;
+}
 
 static int	check_pipe_in_begin(char *line)
 {
@@ -60,6 +67,34 @@ int	number_of_pipes(char *line)
 		i++;
 	}
 	return (pipe);
+}
+
+int	check_command(char *str)
+{
+	int	i;
+	int	y;
+	int	x;
+
+	init_variable(&x, &y, &i);
+	while (str[i] && str[i] != '|')
+	{
+		while (is_white_space(str[i]))
+			i++;
+		while (str[i] == '!' || str[i] == ')' || str[i] == '('
+			|| str[i] == '[' || str[i] == ']'
+			|| str[i] == '?' || str[i] == '`')
+		{
+			y++;
+			i++;
+		}
+		while (str[i] == '>' || str[i] == '<' || str[i] == '&')
+			x = i++;
+		if (y == 1 && !x)
+			return (1);
+		else if (x && !y)
+			return (1);
+	}
+	return (0);
 }
 
 int	check_pipes(char *line)
